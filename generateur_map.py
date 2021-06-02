@@ -1,11 +1,12 @@
 from random import random
+import time
 
 CHR_FILL = "o"
 CHR_EMPTY = "."
 MAP_DENSITY = 0.3 # pour modifier le ratio pleins/vides
-SHOULD_PRINT_IN_FILE = False
+SHOULD_PRINT_IN_FILE = True
 
-def gen_map(x: int, y: int, density: float) -> list[str]:
+def gen_map(x : int, y : int, density : float)->list[str] :
     map = []
     for i in range(y):
         s = CHR_FILL if random() < density else CHR_EMPTY
@@ -16,7 +17,7 @@ def gen_map(x: int, y: int, density: float) -> list[str]:
         map.append(s)
     return "\n".join(map) + "\n"
 
-if __name__ == "__main__":
+def create_map(nomMap:str)-> float :
     while True:
         try:
             width = int(input("Entrez la largeur de la map : "))
@@ -26,9 +27,10 @@ if __name__ == "__main__":
         else:
             map = gen_map(width, height, MAP_DENSITY)
             break
+    tmp1=time.time()
     if SHOULD_PRINT_IN_FILE:
         while True:
-            name = input("Nom de fichier ? ")
+            name = nomMap
             try:
                 fo = open(f"{name}.map", "x")
             except FileExistsError:
@@ -37,5 +39,4 @@ if __name__ == "__main__":
                 fo.write(map)
                 fo.close()
                 break
-    print(map)
-    print("Done")
+    return tmp1
